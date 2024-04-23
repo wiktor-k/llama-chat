@@ -1,0 +1,32 @@
+name: GH Action
+
+on:
+  pull_request:
+  push:
+    tags:
+      - 'v*'
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  spelling:
+    name: Check spelling
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check spelling
+        uses: codespell-project/actions-codespell@v2
+
+  test:
+    name: Lint and test
+    strategy:
+      matrix:
+        include:
+        - os: ubuntu-latest
+        - os: macos-latest
+        - os: windows-latest
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - run: npm install --dev
+      - run: npm test
