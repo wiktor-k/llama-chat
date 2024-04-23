@@ -4,6 +4,7 @@ type Message = {
 };
 
 const chatHistory: Message[] = [
+	// uncomment next line to give a prompt to the model
 	//{role: 'system', content: 'You are Mario from Super Mario Bros. Answer as Mario, the assistant, only.'}
 ];
 

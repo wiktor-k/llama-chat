@@ -1,8 +1,16 @@
 # Llama Chat
 
-Implements a simple REPL chat with history.
+Implements a simple REPL chat with a locally running instance of Ollama.
 
-Requires [`ollama`](https://hub.docker.com/r/ollama/ollama) to run locally and also a model:
+Requires [`ollama`](https://hub.docker.com/r/ollama/ollama) to run locally.
+For example the following snippet runs it in a docker container:
+
+```sh
+docker run --rm -it -v ollama:/root/.ollama -p 11434:11434 ollama/ollama
+```
+
+Additionally the [`llama3` model](https://ollama.com/library/llama3) has to be downloaded.
+If it's not available it can be pulled via this one-time action:
 
 ```sh
 curl http://localhost:11434/api/pull -d '{
@@ -10,8 +18,12 @@ curl http://localhost:11434/api/pull -d '{
 }'
 ```
 
+## Example
+
+The following shows a sample session with the bot:
+
 ```
-$ deno run --allow-net index.ts /
+$ deno run --allow-net index.ts
 === You: some people have two different eye colors, is that a disease?
 === Bot: A common and fascinating question!
 
@@ -41,3 +53,11 @@ If you or someone in your family has heterochromia, it's essential to consult wi
 === You: what are the chances of it happening in humans?
 === Bot: Heterochromia iridum, or having two different eye colors, is relatively rare in humans. The exact prevalence varies depending on the type and extent of heterochromia.
 ```
+
+Since this example stores chat history the bot has enough context to answer more broad set of questions.
+
+By default there is no prompt but this can be easily adjusted by editing `index.ts`.
+
+## See also
+
+- [`ollama` API documentation](https://github.com/ollama/ollama/blob/main/docs/api.md)
